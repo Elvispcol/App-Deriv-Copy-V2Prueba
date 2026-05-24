@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DERIV_CLIENT_ID = '33mgrWPTeAQXoB8hjy8HE';
+const DERIV_CLIENT_ID = '33mmMrgTZxkMPR0AJ0XIJ';
 
 async function connectWithDeriv() {
   // Step 1: Generate PKCE code_verifier
