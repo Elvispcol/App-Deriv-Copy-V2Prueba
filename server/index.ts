@@ -2,6 +2,8 @@ import 'dotenv/config';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { migrate } from 'drizzle-orm/postgres-js/migrator';
+import { db } from './db.js';
 import router from './routes.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -29,6 +31,9 @@ app.get('*', (req, res) => {
     res.status(404).json({ error: 'Not found' });
   }
 });
+
+// Run migrations automatically before starting the server
+await migrate(db, { migrationsFolder: './drizzle' });
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 PorCiento Copy Trading server running on port ${PORT}`);
