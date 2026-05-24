@@ -5,14 +5,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
-    "dev:server": "tsx watch server/index.ts",
-    "dev:client": "vite",
-    "build": "tsc -p tsconfig.server.json && tsc --noEmit && vite build",
+    "build": "tsc -p tsconfig.server.json && vite build",
     "start": "node dist/server/index.js",
     "db:migrate": "drizzle-kit migrate",
-    "db:generate": "drizzle-kit generate",
-    "db:push": "drizzle-kit push"
+    "db:generate": "drizzle-kit generate"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
