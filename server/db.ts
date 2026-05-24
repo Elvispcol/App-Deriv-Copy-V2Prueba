@@ -1,14 +1,16 @@
 import postgres from 'postgres';
 import { drizzle } from 'drizzle-orm/postgres-js';
+import * as schema from './schema.js';
 
-const connectionString = process.env.DATABASE_URL;
+const getDb = () => {
+  const connectionString = process.env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('DATABASE_URL environment variable is required');
+  }
+  const client = postgres(connectionString, {
+    ssl: { rejectUnauthorized: false },
+  });
+  return drizzle(client, { schema });
+};
 
-if (!connectionString) {
-  throw new Error('DATABASE_URL environment variable is required');
-}
-
-const client = postgres(connectionString, {
-  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
-});
-
-export const db = drizzle(client);
+export const db = getDb();
