@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    await migrate(db, { migrationsFolder: './drizzle' });
+    await migrate(db, { migrationsFolder: path.join(__dirname, '../../drizzle') });
     console.log('Database migrated successfully');
   } catch (err) {
     console.error('Migration error:', err);
