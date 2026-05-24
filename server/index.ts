@@ -25,12 +25,29 @@ app.get('*', (_req, res) => {
 const PORT = process.env.PORT || 3000;
 
 async function start() {
+  const migrationsPath = path.join(process.cwd(), 'drizzle');
+  console.log('CWD:', process.cwd());
+  console.log('Migrations path:', migrationsPath);
+  
   try {
-    await migrate(db, { migrationsFolder: path.join(process.cwd(), 'drizzle') });
+    const fs = await import('fs');
+    const exists = fs.existsSync(migrationsPath);
+    console.log('Drizzle folder exists:', exists);
+    if (exists) {
+      const files = fs.readdirSync(migrationsPath);
+      console.log('Files in drizzle:', files);
+    }
+  } catch (e) {
+    console.log('FS check error:', e);
+  }
+
+  try {
+    await migrate(db, { migrationsFolder: migrationsPath });
     console.log('Database migrated successfully');
   } catch (err) {
     console.error('Migration error:', err);
   }
+
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
