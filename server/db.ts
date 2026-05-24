@@ -7,7 +7,7 @@ let _db: ReturnType<typeof drizzle> | null = null;
 export function getDb() {
   if (_db) return _db;
   
-  const url = process.env.DATABASE_URL;
+  const url = process.env.DATABASE_URL || process.env.DATABASE_PUBLIC_URL;
   console.log('DATABASE_URL exists:', !!url);
   console.log('All env keys:', Object.keys(process.env).join(', '));
   
